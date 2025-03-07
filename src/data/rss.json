@@ -1,0 +1,18 @@
+{
+  "sources": [
+    {
+      "id": "ruanyf",
+      "title": "阮一峰的网络日志",
+      "url": "http://www.ruanyifeng.com/blog/atom.xml",
+      "website": "http://www.ruanyifeng.com/blog",
+      "category": "tech"
+    },
+    {
+      "id": "v2ex",
+      "title": "V2EX",
+      "url": "https://www.v2ex.com/feed/hot.json",
+      "website": "https://www.v2ex.com",
+      "category": "tech"
+    }
+  ]
+} 
