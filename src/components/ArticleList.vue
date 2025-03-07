@@ -16,32 +16,42 @@
             </a>
           </div>
 
-
-
           <!-- 分类按钮组 -->
           <div class="flex flex-wrap gap-2">
-            <button @click="selectedCategory = ''" :class="[
-              'px-4 py-2 rounded-full text-sm font-medium transition-colors',
-              !selectedCategory
-                ? 'bg-blue-500 text-white'
-                : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-            ]">
+            <!-- 全部按钮 -->
+            <button 
+              @click="selectedCategory = ''" 
+              :class="[
+                'px-4 py-2 rounded-full text-sm font-medium transition-colors',
+                !selectedCategory
+                  ? 'bg-gray-600 text-white hover:bg-gray-700'
+                  : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+              ]"
+            >
               全部
               <span class="ml-2 text-xs">
                 ({{ articlesList.length }})
               </span>
             </button>
-            <button v-for="category in categories" :key="category.id" @click="selectedCategory = category.id" :class="[
-              'px-4 py-2 rounded-full text-sm font-medium transition-colors',
-              selectedCategory === category.id
-                ? getCategoryColor(category.id)
-                : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-            ]">
+
+            <!-- 分类按钮 -->
+            <button 
+              v-for="category in categories" 
+              :key="category.id" 
+              @click="selectedCategory = category.id"
+              :class="[
+                'px-4 py-2 rounded-full text-sm font-medium transition-colors',
+                selectedCategory === category.id
+                  ? `bg-${category.color} text-white hover:bg-${category.color.replace('-500', '-600')}`
+                  : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+              ]"
+            >
               {{ category.name }}
               <span class="ml-2 text-xs">
                 ({{ getCategoryCount(category.id) }})
               </span>
             </button>
+
             <!-- 搜索和分类区域 -->
             <div class="space-y-4 gap-4">
               <!-- 搜索框 -->
@@ -133,16 +143,11 @@ const getCategoryCount = (categoryId) => {
 }
 
 const getCategoryColor = (categoryId) => {
-  switch (categoryId) {
-    case '技术博客':
-      return 'bg-blue-500 text-white'
-    case 'Python':
-      return 'bg-green-500 text-white'
-    case 'R语言':
-      return 'bg-purple-500 text-white'
-    default:
-      return 'bg-gray-500 text-white'
+  const category = categories.value.find(c => c.id === categoryId)
+  if (category) {
+    return `bg-${category.color} text-white hover:bg-${category.color.replace('-500', '-600')}`
   }
+  return 'bg-gray-600 text-white hover:bg-gray-700'
 }
 
 const filteredArticles = computed(() => {

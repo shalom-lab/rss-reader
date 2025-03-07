@@ -25,24 +25,31 @@ try {
   process.exit(1);
 }
 
-// 定义分类信息
-const categories = [
-  {
-    "id": "技术博客",
-    "name": "技术博客",
-    "color": "blue.500"
-  },
-  {
-    "id": "Python",
-    "name": "Python",
-    "color": "green.500"
-  },
-  {
-    "id": "R语言",
-    "name": "R语言",
-    "color": "purple.500"
-  }
-];
+// 从 RSS 配置中获取唯一的分类
+const getCategories = (sources) => {
+  const uniqueCategories = new Set(sources.map(source => source.category));
+  return Array.from(uniqueCategories).map(category => ({
+    id: category,
+    name: category,
+    color: getCategoryColor(category)
+  }));
+};
+
+// 为分类分配颜色
+const getCategoryColor = (category) => {
+  // 使用一组预定义的颜色循环
+  const colors = [
+    'blue', 'green', 'purple', 'red', 'yellow', 'indigo', 'pink'
+  ];
+  
+  // 使用类别名称的哈希值来选择颜色
+  const hash = category.split('').reduce((acc, char) => {
+    return char.charCodeAt(0) + ((acc << 5) - acc);
+  }, 0);
+  
+  const colorIndex = Math.abs(hash) % colors.length;
+  return `${colors[colorIndex]}-500`;
+};
 
 async function fetchRSS() {
   try {
@@ -88,11 +95,11 @@ async function fetchRSS() {
       fs.mkdirSync(articlesDir, { recursive: true });
     }
 
-    // 保存到文件，包含categories
+    // 保存到文件，包含从 RSS 配置中获取的分类
     fs.writeFileSync(
       articlesPath,
       JSON.stringify({
-        categories,
+        categories: getCategories(rssConfig.sources),
         articles: allArticles
       }, null, 2)
     );

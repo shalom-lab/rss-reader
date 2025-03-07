@@ -3,17 +3,17 @@
     {
       "id": "技术博客",
       "name": "技术博客",
-      "color": "blue.500"
+      "color": "red-500"
     },
     {
       "id": "Python",
       "name": "Python",
-      "color": "green.500"
+      "color": "green-500"
     },
     {
       "id": "R语言",
       "name": "R语言",
-      "color": "purple.500"
+      "color": "purple-500"
     }
   ],
   "articles": [
