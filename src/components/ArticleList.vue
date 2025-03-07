@@ -79,12 +79,12 @@
         <article 
           v-for="article in filteredArticles" 
           :key="article.id"
-          class="bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow duration-300 overflow-hidden group flex flex-col"
+          class="bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow duration-300 overflow-hidden group flex flex-col h-[420px]"
         >
           <!-- 文章主体内容 -->
-          <div class="p-6 flex-1 flex flex-col">
+          <div class="p-6 flex-1 flex flex-col min-h-0">
             <!-- 分类和日期 -->
-            <div class="flex items-center gap-2 text-sm text-gray-500 mb-3">
+            <div class="flex items-center gap-2 text-sm text-gray-500 mb-2">
               <span 
                 :class="[
                   'px-2 py-1 rounded text-white',
@@ -97,14 +97,14 @@
             </div>
 
             <!-- 标题 -->
-            <h2 class="text-xl font-semibold mb-3 group-hover:text-blue-600 transition-colors">
+            <h2 class="text-lg font-semibold mb-2 line-clamp-2 group-hover:text-blue-600 transition-colors">
               <a :href="article.link" target="_blank" class="hover:text-blue-700">
                 {{ article.title }}
               </a>
             </h2>
 
             <!-- 来源 -->
-            <div class="text-gray-600 text-sm mb-4 flex items-center gap-2">
+            <div class="text-gray-600 text-sm mb-2 flex items-center gap-2">
               <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
               </svg>
@@ -112,13 +112,13 @@
             </div>
 
             <!-- 描述 -->
-            <p class="text-gray-600 line-clamp-3 mb-4 flex-1">
+            <p class="text-gray-600 text-sm line-clamp-4 overflow-hidden flex-1">
               {{ article.description }}
             </p>
           </div>
 
           <!-- 阅读全文按钮 -->
-          <div class="px-6 py-4 bg-gray-50 border-t mt-auto">
+          <div class="px-6 py-3 bg-gray-50 border-t">
             <a 
               :href="article.link" 
               target="_blank"
