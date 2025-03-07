@@ -1,35 +1,60 @@
 <template>
   <div class="min-h-screen bg-gray-50">
     <div class="container mx-auto px-4 py-8">
-      <!-- 头部搜索区域 -->
+      <!-- 头部区域 -->
       <div class="mb-8 bg-white rounded-lg shadow-sm p-6">
-        <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-          <h2 class="text-3xl font-bold text-gray-800">RSS阅读器</h2>
-          <div class="flex flex-col sm:flex-row gap-4">
-            <select 
-              v-model="selectedCategory"
-              class="px-4 py-2 border rounded-lg bg-white hover:border-blue-500 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-colors"
-            >
-              <option value="">全部分类</option>
-              <option 
-                v-for="category in categories" 
-                :key="category" 
-                :value="category"
-                class="py-1"
-              >
-                {{ category }}
-              </option>
-            </select>
-            <div class="relative">
-              <input 
-                type="text"
-                v-model="searchQuery"
-                placeholder="搜索文章..."
-                class="w-full px-4 py-2 pl-10 border rounded-lg hover:border-blue-500 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-colors"
-              >
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-400 absolute left-3 top-1/2 -translate-y-1/2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+        <div class="flex flex-col gap-6">
+          <!-- 标题和 GitHub 链接 -->
+          <div class="flex items-center justify-between">
+            <h2 class="text-3xl font-bold text-gray-800">RSS阅读器</h2>
+            <a href="https://github.com/shalom-lab/rss-reader/" target="_blank" rel="noopener noreferrer"
+              class="text-gray-600 hover:text-gray-900 transition-colors" title="View on GitHub">
+              <svg class="w-6 h-6" viewBox="0 0 24 24" fill="currentColor">
+                <path fill-rule="evenodd" clip-rule="evenodd"
+                  d="M12 2C6.477 2 2 6.477 2 12c0 4.42 2.865 8.17 6.839 9.49.5.092.682-.217.682-.482 0-.237-.008-.866-.013-1.7-2.782.604-3.369-1.34-3.369-1.34-.454-1.156-1.11-1.464-1.11-1.464-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.578 9.578 0 0112 6.836c.85.004 1.705.114 2.504.336 1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.203 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.578.688.48C19.138 20.167 22 16.418 22 12c0-5.523-4.477-10-10-10z" />
               </svg>
+            </a>
+          </div>
+
+
+
+          <!-- 分类按钮组 -->
+          <div class="flex flex-wrap gap-2">
+            <button @click="selectedCategory = ''" :class="[
+              'px-4 py-2 rounded-full text-sm font-medium transition-colors',
+              !selectedCategory
+                ? 'bg-blue-500 text-white'
+                : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+            ]">
+              全部
+              <span class="ml-2 text-xs">
+                ({{ articlesList.length }})
+              </span>
+            </button>
+            <button v-for="category in categories" :key="category.id" @click="selectedCategory = category.id" :class="[
+              'px-4 py-2 rounded-full text-sm font-medium transition-colors',
+              selectedCategory === category.id
+                ? getCategoryColor(category.id)
+                : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+            ]">
+              {{ category.name }}
+              <span class="ml-2 text-xs">
+                ({{ getCategoryCount(category.id) }})
+              </span>
+            </button>
+            <!-- 搜索和分类区域 -->
+            <div class="space-y-4 gap-4">
+              <!-- 搜索框 -->
+              <div class="relative">
+                <input type="text" v-model="searchQuery" placeholder="搜索文章..."
+                  class="w-full px-4 py-2 pl-10 border rounded-lg hover:border-blue-500 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-colors">
+                <svg xmlns="http://www.w3.org/2000/svg"
+                  class="h-5 w-5 text-gray-400 absolute left-3 top-1/2 -translate-y-1/2" fill="none" viewBox="0 0 24 24"
+                  stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                </svg>
+              </div>
             </div>
           </div>
         </div>
@@ -37,29 +62,23 @@
 
       <!-- 文章列表 -->
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        <article 
-          v-for="article in filteredArticles" 
-          :key="article.id"
-          class="bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow duration-300 overflow-hidden group"
-        >
+        <article v-for="article in filteredArticles" :key="article.id"
+          class="bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow duration-300 overflow-hidden group">
           <div class="p-6">
             <div class="flex items-center gap-2 text-sm text-gray-500 mb-3">
               <span class="px-2 py-1 bg-blue-50 text-blue-600 rounded">{{ article.category }}</span>
               <span>{{ formatDate(article.pubDate) }}</span>
             </div>
-            
+
             <h2 class="text-xl font-semibold mb-3 group-hover:text-blue-600 transition-colors">
-              <a 
-                :href="article.link" 
-                target="_blank" 
-                class="hover:text-blue-700"
-              >
+              <a :href="article.link" target="_blank" class="hover:text-blue-700">
                 {{ article.title }}
               </a>
             </h2>
 
             <div class="text-gray-600 text-sm mb-4 flex items-center gap-2">
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24"
+                stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
               </svg>
               <span>{{ article.source }}</span>
@@ -71,13 +90,11 @@
           </div>
 
           <div class="px-6 py-4 bg-gray-50 border-t">
-            <a 
-              :href="article.link" 
-              target="_blank"
-              class="text-blue-600 hover:text-blue-800 text-sm font-medium flex items-center gap-1 group-hover:gap-2 transition-all"
-            >
+            <a :href="article.link" target="_blank"
+              class="text-blue-600 hover:text-blue-800 text-sm font-medium flex items-center gap-1 group-hover:gap-2 transition-all">
               阅读全文
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24"
+                stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
               </svg>
             </a>
@@ -87,14 +104,13 @@
 
       <!-- 无结果提示 -->
       <div v-if="filteredArticles.length === 0" class="text-center py-12">
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 mx-auto text-gray-400 mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M12 12h.01M12 12h.01M12 12h.01M12 12h.01M12 12h.01M12 12h.01" />
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 mx-auto text-gray-400 mb-4" fill="none"
+          viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M12 12h.01M12 12h.01M12 12h.01M12 12h.01M12 12h.01M12 12h.01M12 12h.01" />
         </svg>
         <p class="text-gray-500 text-lg">没有找到相关文章</p>
-        <button 
-          @click="resetFilters" 
-          class="mt-4 px-4 py-2 text-blue-600 hover:text-blue-800 font-medium"
-        >
+        <button @click="resetFilters" class="mt-4 px-4 py-2 text-blue-600 hover:text-blue-800 font-medium">
           清除筛选
         </button>
       </div>
@@ -110,15 +126,29 @@ const articlesList = ref(articles.articles)
 const searchQuery = ref('')
 const selectedCategory = ref('')
 
-const categories = computed(() => {
-  const cats = new Set(articlesList.value.map(article => article.category))
-  return Array.from(cats)
-})
+const categories = computed(() => articles.categories)
+
+const getCategoryCount = (categoryId) => {
+  return articlesList.value.filter(article => article.category === categoryId).length
+}
+
+const getCategoryColor = (categoryId) => {
+  switch (categoryId) {
+    case '技术博客':
+      return 'bg-blue-500 text-white'
+    case 'Python':
+      return 'bg-green-500 text-white'
+    case 'R语言':
+      return 'bg-purple-500 text-white'
+    default:
+      return 'bg-gray-500 text-white'
+  }
+}
 
 const filteredArticles = computed(() => {
   return articlesList.value.filter(article => {
     const matchesSearch = article.title.toLowerCase().includes(searchQuery.value.toLowerCase()) ||
-                         article.description.toLowerCase().includes(searchQuery.value.toLowerCase())
+      article.description.toLowerCase().includes(searchQuery.value.toLowerCase())
     const matchesCategory = !selectedCategory.value || article.category === selectedCategory.value
     return matchesSearch && matchesCategory
   })
@@ -148,4 +178,10 @@ const resetFilters = () => {
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   transition-duration: 300ms;
 }
-</style> 
+
+.line-clamp-3 {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+}
+</style>

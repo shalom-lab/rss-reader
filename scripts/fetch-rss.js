@@ -25,6 +25,25 @@ try {
   process.exit(1);
 }
 
+// 定义分类信息
+const categories = [
+  {
+    "id": "技术博客",
+    "name": "技术博客",
+    "color": "blue.500"
+  },
+  {
+    "id": "Python",
+    "name": "Python",
+    "color": "green.500"
+  },
+  {
+    "id": "R语言",
+    "name": "R语言",
+    "color": "purple.500"
+  }
+];
+
 async function fetchRSS() {
   try {
     let allArticles = [];
@@ -69,10 +88,13 @@ async function fetchRSS() {
       fs.mkdirSync(articlesDir, { recursive: true });
     }
 
-    // 保存到文件
+    // 保存到文件，包含categories
     fs.writeFileSync(
       articlesPath,
-      JSON.stringify({ articles: allArticles }, null, 2)
+      JSON.stringify({
+        categories,
+        articles: allArticles
+      }, null, 2)
     );
 
     console.log(`Successfully saved ${allArticles.length} articles to ${articlesPath}`);

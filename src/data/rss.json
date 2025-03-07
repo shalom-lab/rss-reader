@@ -5,70 +5,42 @@
       "title": "阮一峰的网络日志",
       "url": "http://www.ruanyifeng.com/blog/atom.xml",
       "website": "http://www.ruanyifeng.com/blog",
-      "category": "tech"
+      "category": "技术博客"
     },
     {
       "id": "rweekly",
       "title": "R Weekly",
       "url": "https://rweekly.org/feed.xml",
       "website": "https://rweekly.org",
-      "category": "r-lang"
+      "category": "R语言"
     },
     {
       "id": "tidyverse",
       "title": "Tidyverse Blog",
       "url": "https://www.tidyverse.org/blog/index.xml",
       "website": "https://www.tidyverse.org/blog/",
-      "category": "r-lang"
+      "category": "R语言"
     },
     {
       "id": "rstudio",
       "title": "RStudio Blog",
       "url": "https://posit.co/blog/feed/",
       "website": "https://posit.co/blog/",
-      "category": "r-lang"
+      "category": "R语言"
     },
     {
       "id": "pythonweekly",
       "title": "Python Weekly",
       "url": "https://pythonweekly.com/rss",
       "website": "https://pythonweekly.com",
-      "category": "python"
+      "category": "Python"
     },
     {
       "id": "realpython",
       "title": "Real Python",
       "url": "https://realpython.com/feed",
       "website": "https://realpython.com",
-      "category": "python"
-    },
-    {
-      "id": "julialang",
-      "title": "Julia Language Blog",
-      "url": "https://julialang.org/feed.xml",
-      "website": "https://julialang.org/blog/",
-      "category": "julia"
-    },
-    {
-      "id": "kaggle",
-      "title": "Kaggle Blog",
-      "url": "http://blog.kaggle.com/feed/",
-      "website": "http://blog.kaggle.com",
-      "category": "data-science"
-    },
-    {
-      "id": "towards-data-science",
-      "title": "Towards Data Science",
-      "url": "https://towardsdatascience.com/feed",
-      "website": "https://towardsdatascience.com",
-      "category": "data-science"
-    },
-    {
-      "id": "distill",
-      "title": "Distill.pub",
-      "url": "https://distill.pub/rss.xml",
-      "website": "https://distill.pub",
-      "category": "machine-learning"
+      "category": "Python"
     }
   ]
 } 
