@@ -8,7 +8,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
 const parser = new Parser({
-  timeout: 10000, // 增加超时时间到10秒
+  timeout: 10000, // 10秒超时
   headers: {
     'User-Agent': 'Mozilla/5.0 (compatible; RSS-Reader/1.0;)'
   }
@@ -36,19 +36,43 @@ const getCategories = (sources) => {
 };
 
 // 为分类分配颜色
-const getCategoryColor = (category) => {
-  // 使用一组预定义的颜色循环
+const getCategoryColor = (category, allCategories) => {
+  // 定义8种基础颜色
   const colors = [
-    'blue', 'green', 'purple', 'red', 'yellow', 'indigo', 'pink'
+    'blue',    // 蓝色
+    'green',   // 绿色
+    'red',     // 红色
+    'yellow',  // 黄色
+    'purple',  // 紫色
+    'orange',  // 橙色
+    'teal',    // 青色
+    'indigo'   // 靛蓝
   ];
+
+  // 获取分类的索引
+  const categoryIndex = allCategories.indexOf(category);
   
-  // 使用类别名称的哈希值来选择颜色
-  const hash = category.split('').reduce((acc, char) => {
-    return char.charCodeAt(0) + ((acc << 5) - acc);
-  }, 0);
+  // 使用模运算确保颜色循环使用
+  const colorIndex = categoryIndex % colors.length;
   
-  const colorIndex = Math.abs(hash) % colors.length;
+  // 返回对应的颜色加上-500后缀（使用中等亮度的色调）
   return `${colors[colorIndex]}-500`;
+};
+
+// 添加超时处理的辅助函数
+const fetchWithTimeout = async (source) => {
+  try {
+    const feed = await Promise.race([
+      parser.parseURL(source.url),
+      new Promise((_, reject) => 
+        setTimeout(() => reject(new Error('Timeout')), 15000)
+      )
+    ]);
+    return feed;
+  } catch (error) {
+    console.error(`Error fetching ${source.title}: ${error.message}`);
+    return null;
+  }
 };
 
 async function fetchRSS() {
@@ -59,7 +83,7 @@ async function fetchRSS() {
     for (const source of rssConfig.sources) {
       try {
         console.log(`Fetching from ${source.title}...`);
-        const feed = await parser.parseURL(source.url);
+        const feed = await fetchWithTimeout(source);
         
         const articles = feed.items.map(item => ({
           id: item.guid || item.link,
@@ -105,6 +129,8 @@ async function fetchRSS() {
     );
 
     console.log(`Successfully saved ${allArticles.length} articles to ${articlesPath}`);
+    // 显式退出进程
+    process.exit(0);
   } catch (error) {
     console.error('Error in fetchRSS:', error.message);
     process.exit(1);
