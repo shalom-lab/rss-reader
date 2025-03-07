@@ -37,7 +37,9 @@
               @click="selectedCategory = category.id"
               :class="[
                 'category-btn',
-                selectedCategory === category.id ? `bg-${category.color}-500 text-white hover:bg-${category.color}-600` : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                selectedCategory === category.id ? 
+                `bg-${getCategoryColor(category.id,allCategories)}-500 text-white` 
+                : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
               ]"
             >
               {{ category.name }}
@@ -144,6 +146,8 @@ const selectedCategory = ref('')
 
 const categories = computed(() => articles.categories)
 
+const allCategories = computed(() => articles.categories.map(category => category.name))
+
 const getCategoryCount = (categoryId) => {
   return articlesList.value.filter(article => article.category === categoryId).length
 }
@@ -167,6 +171,30 @@ const formatDate = (date) => {
     minute: '2-digit'
   })
 }
+
+// 为分类分配颜色
+const getCategoryColor = (category, allCategories) => {
+  // 定义8种基础颜色
+  const colors = [
+    'blue',    // 蓝色
+    'green',   // 绿色
+    'red',     // 红色
+    'yellow',  // 黄色
+    'purple',  // 紫色
+    'orange',  // 橙色
+    'teal',    // 青色
+    'indigo'   // 靛蓝
+  ];
+
+  // 获取分类的索引
+  const categoryIndex = allCategories.indexOf(category);
+  
+  // 使用模运算确保颜色循环使用
+  const colorIndex = categoryIndex % colors.length;
+  
+  // 返回对应的颜色加上-500后缀（使用中等亮度的色调）
+  return `${colors[colorIndex]}`;
+};
 
 const resetFilters = () => {
   searchQuery.value = ''

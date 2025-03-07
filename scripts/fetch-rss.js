@@ -30,34 +30,10 @@ const getCategories = (sources) => {
   const uniqueCategories = new Set(sources.map(source => source.category));
   return Array.from(uniqueCategories).map(category => ({
     id: category,
-    name: category,
-    color: getCategoryColor(category)
+    name: category
   }));
 };
 
-// 为分类分配颜色
-const getCategoryColor = (category, allCategories) => {
-  // 定义8种基础颜色
-  const colors = [
-    'blue',    // 蓝色
-    'green',   // 绿色
-    'red',     // 红色
-    'yellow',  // 黄色
-    'purple',  // 紫色
-    'orange',  // 橙色
-    'teal',    // 青色
-    'indigo'   // 靛蓝
-  ];
-
-  // 获取分类的索引
-  const categoryIndex = allCategories.indexOf(category);
-  
-  // 使用模运算确保颜色循环使用
-  const colorIndex = categoryIndex % colors.length;
-  
-  // 返回对应的颜色加上-500后缀（使用中等亮度的色调）
-  return `${colors[colorIndex]}-500`;
-};
 
 // 添加超时处理的辅助函数
 const fetchWithTimeout = async (source) => {
