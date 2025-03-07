@@ -76,39 +76,56 @@
 
       <!-- 文章列表 -->
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        <article v-for="article in filteredArticles" :key="article.id"
-          class="bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow duration-300 overflow-hidden group">
-          <div class="p-6">
+        <article 
+          v-for="article in filteredArticles" 
+          :key="article.id"
+          class="bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow duration-300 overflow-hidden group flex flex-col"
+        >
+          <!-- 文章主体内容 -->
+          <div class="p-6 flex-1 flex flex-col">
+            <!-- 分类和日期 -->
             <div class="flex items-center gap-2 text-sm text-gray-500 mb-3">
-              <span class="px-2 py-1 bg-blue-50 text-blue-600 rounded">{{ article.category }}</span>
+              <span 
+                :class="[
+                  'px-2 py-1 rounded text-white',
+                  `bg-${categories.find(c => c.id === article.category)?.color || 'gray-500'}`
+                ]"
+              >
+                {{ article.category }}
+              </span>
               <span>{{ formatDate(article.pubDate) }}</span>
             </div>
 
+            <!-- 标题 -->
             <h2 class="text-xl font-semibold mb-3 group-hover:text-blue-600 transition-colors">
               <a :href="article.link" target="_blank" class="hover:text-blue-700">
                 {{ article.title }}
               </a>
             </h2>
 
+            <!-- 来源 -->
             <div class="text-gray-600 text-sm mb-4 flex items-center gap-2">
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24"
-                stroke="currentColor">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
               </svg>
               <span>{{ article.source }}</span>
             </div>
 
-            <p class="text-gray-600 line-clamp-3 overflow-hidden">
+            <!-- 描述 -->
+            <p class="text-gray-600 line-clamp-3 mb-4 flex-1">
               {{ article.description }}
             </p>
           </div>
 
-          <div class="px-6 py-4 bg-gray-50 border-t">
-            <a :href="article.link" target="_blank"
-              class="text-blue-600 hover:text-blue-800 text-sm font-medium flex items-center gap-1 group-hover:gap-2 transition-all">
+          <!-- 阅读全文按钮 -->
+          <div class="px-6 py-4 bg-gray-50 border-t mt-auto">
+            <a 
+              :href="article.link" 
+              target="_blank"
+              class="text-blue-600 hover:text-blue-800 text-sm font-medium flex items-center gap-1 group-hover:gap-2 transition-all"
+            >
               阅读全文
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24"
-                stroke="currentColor">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
               </svg>
             </a>
