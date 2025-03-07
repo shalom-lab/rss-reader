@@ -4,7 +4,7 @@ import { resolve } from 'path'
 
 export default defineConfig({
   plugins: [vue()],
-  base: '/rss-reader/', // 替换为你的GitHub仓库名
+  base: '/rss-reader/',  // 确保这里填写的是你的仓库名
   resolve: {
     alias: {
       '@': resolve(__dirname, 'src')
