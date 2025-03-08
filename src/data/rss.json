@@ -1,6 +1,13 @@
 {
   "sources": [
     {
+      "id": "chinaepi",
+      "title": "中华流病",
+      "url": "http://chinaepi.icdc.cn/download_upload_file.aspx?file_name=/rss/zhlxbx/cn/current.xml",
+      "website": "http://chinaepi.icdc.cn",
+      "category": "流行病学"
+    },
+    {
       "id": "ruanyf",
       "title": "阮一峰的网络日志",
       "url": "http://www.ruanyifeng.com/blog/atom.xml",
