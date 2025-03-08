@@ -87,7 +87,7 @@ async function fetchRSS() {
     allArticles.sort((a, b) => new Date(b.pubDate) - new Date(a.pubDate));
 
     // 只保留最新的100篇文章
-    allArticles = allArticles.slice(0, 50);
+    allArticles = allArticles.slice(0, 100);
 
     // 确保输出目录存在
     const articlesDir = path.dirname(articlesPath);
