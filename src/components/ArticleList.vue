@@ -31,20 +31,15 @@
               </span>
             </button>
             <!-- 分类按钮 -->
-            <button 
-              v-for="category in categories" 
-              :key="category.id" 
-              @click="selectedCategory = category.id"
-              :class="[
-                'category-btn',
-                selectedCategory === category.id ? 
-                `bg-${getCategoryColor(category.id,allCategories)}-500 text-white` 
+            <button v-for="(category,index) in categories" :key="index" @click="selectedCategory = category" :class="[
+              'category-btn',
+              selectedCategory === category ?
+                `bg-${getCategoryColor(category, allCategories)}-500 text-white`
                 : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-              ]"
-            >
-              {{ category.name }}
+            ]">
+              {{ category }}
               <span class="ml-2 text-xs">
-                ({{ getCategoryCount(category.id) }})
+                ({{ getCategoryCount(category) }})
               </span>
             </button>
 
@@ -74,11 +69,9 @@
           <div class="p-6 flex-1 flex flex-col">
             <!-- 分类和日期 -->
             <div class="flex items-center gap-2 text-sm text-gray-500 mb-3">
-              <span 
-                :class="[
-                  'category-tag'
-                ]"
-              >
+              <span :class="[
+                'category-tag'
+              ]">
                 {{ article.category }}
               </span>
               <span>{{ formatDate(article.pubDate) }}</span>
@@ -140,16 +133,22 @@
 import { ref, computed } from 'vue'
 import articles from '../data/articles.json'
 
-const articlesList = ref(articles.articles)
+// 获取唯一的分类
+const getCategories = (sources) => {
+  const uniqueCategories = new Set(sources.map(source => source.category));
+  return Array.from(uniqueCategories)
+};
+
+const articlesList = ref(articles)
 const searchQuery = ref('')
 const selectedCategory = ref('')
 
-const categories = computed(() => articles.categories)
+const categories = getCategories(articles)
 
-const allCategories = computed(() => articles.categories.map(category => category.name))
+const allCategories = categories
 
-const getCategoryCount = (categoryId) => {
-  return articlesList.value.filter(article => article.category === categoryId).length
+const getCategoryCount = (category) => {
+  return articlesList.value.filter(article => article.category === category).length
 }
 
 const filteredArticles = computed(() => {
@@ -188,10 +187,10 @@ const getCategoryColor = (category, allCategories) => {
 
   // 获取分类的索引
   const categoryIndex = allCategories.indexOf(category);
-  
+
   // 使用模运算确保颜色循环使用
   const colorIndex = categoryIndex % colors.length;
-  
+
   // 返回对应的颜色加上-500后缀（使用中等亮度的色调）
   return `${colors[colorIndex]}`;
 };
@@ -210,7 +209,7 @@ const resetFilters = () => {
   --color-blue-400: #60a5fa;
   --color-blue-500: #3b82f6;
   --color-blue-600: #2563eb;
-  
+
   --color-green-300: #86efac;
   --color-green-400: #4ade80;
   --color-green-500: #22c55e;
@@ -257,61 +256,69 @@ const resetFilters = () => {
   --color-gray-600: #4b5563;
 }
 
-.bg-indigo-500 { 
+.bg-indigo-500 {
   background-color: var(--color-indigo-500);
 }
-.bg-indigo-600 { 
-  background-color: var(--color-indigo-600);
-} 
 
-.bg-blue-500 { 
+.bg-indigo-600 {
+  background-color: var(--color-indigo-600);
+}
+
+.bg-blue-500 {
   background-color: var(--color-blue-500);
 }
-.bg-blue-600 { 
-  background-color: var(--color-blue-600);
-} 
 
-.bg-green-500 { 
+.bg-blue-600 {
+  background-color: var(--color-blue-600);
+}
+
+.bg-green-500 {
   background-color: var(--color-green-500);
 }
-.bg-green-600 { 
-  background-color: var(--color-green-600);
-} 
 
-.bg-red-500 { 
+.bg-green-600 {
+  background-color: var(--color-green-600);
+}
+
+.bg-red-500 {
   background-color: var(--color-red-500);
 }
-.bg-red-600 { 
-  background-color: var(--color-red-600);
-} 
 
-.bg-yellow-500 { 
+.bg-red-600 {
+  background-color: var(--color-red-600);
+}
+
+.bg-yellow-500 {
   background-color: var(--color-yellow-500);
 }
-.bg-yellow-600 { 
-  background-color: var(--color-yellow-600);
-} 
 
-.bg-purple-500 { 
+.bg-yellow-600 {
+  background-color: var(--color-yellow-600);
+}
+
+.bg-purple-500 {
   background-color: var(--color-purple-500);
 }
-.bg-purple-600 { 
-  background-color: var(--color-purple-600);
-} 
 
-.bg-orange-500 { 
+.bg-purple-600 {
+  background-color: var(--color-purple-600);
+}
+
+.bg-orange-500 {
   background-color: var(--color-orange-500);
 }
-.bg-orange-600 { 
-  background-color: var(--color-orange-600);
-} 
 
-.bg-teal-500 { 
+.bg-orange-600 {
+  background-color: var(--color-orange-600);
+}
+
+.bg-teal-500 {
   background-color: var(--color-teal-500);
 }
-.bg-teal-600 { 
+
+.bg-teal-600 {
   background-color: var(--color-teal-600);
-} 
+}
 
 /* 分类按钮基础样式 */
 .category-btn {

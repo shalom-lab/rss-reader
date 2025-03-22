@@ -1,53 +1,30 @@
-{
-  "sources": [
-    {
-      "id": "chinaepi",
-      "title": "中华流病",
-      "url": "http://chinaepi.icdc.cn/download_upload_file.aspx?file_name=/rss/zhlxbx/cn/current.xml",
-      "website": "http://chinaepi.icdc.cn",
-      "category": "流行病学"
-    },
-    {
-      "id": "ruanyf",
-      "title": "阮一峰的网络日志",
-      "url": "http://www.ruanyifeng.com/blog/atom.xml",
-      "website": "http://www.ruanyifeng.com/blog",
-      "category": "技术博客"
-    },
-    {
-      "id": "rweekly",
-      "title": "R Weekly",
-      "url": "https://rweekly.org/feed.xml",
-      "website": "https://rweekly.org",
-      "category": "R语言"
-    },
-    {
-      "id": "tidyverse",
-      "title": "Tidyverse Blog",
-      "url": "https://www.tidyverse.org/blog/index.xml",
-      "website": "https://www.tidyverse.org/blog/",
-      "category": "R语言"
-    },
-    {
-      "id": "rstudio",
-      "title": "RStudio Blog",
-      "url": "https://posit.co/blog/feed/",
-      "website": "https://posit.co/blog/",
-      "category": "R语言"
-    },
-    {
-      "id": "pythonweekly",
-      "title": "Python Weekly",
-      "url": "https://pythonweekly.com/rss",
-      "website": "https://pythonweekly.com",
-      "category": "Python"
-    },
-    {
-      "id": "realpython",
-      "title": "Real Python",
-      "url": "https://realpython.com/feed",
-      "website": "https://realpython.com",
-      "category": "Python"
-    }
-  ]
-} 
+[
+  {
+    "id": "ruanyf",
+    "title": "阮一峰的网络日志",
+    "url": "http://www.ruanyifeng.com/blog/atom.xml",
+    "website": "http://www.ruanyifeng.com/blog",
+    "category": "技术博客"
+  },
+  {
+    "id": "rweekly",
+    "title": "R Weekly",
+    "url": "https://rweekly.org/feed.xml",
+    "website": "https://rweekly.org",
+    "category": "R语言"
+  },
+  {
+    "id": "tidyverse",
+    "title": "Tidyverse Blog",
+    "url": "https://www.tidyverse.org/blog/index.xml",
+    "website": "https://www.tidyverse.org/blog/",
+    "category": "R语言"
+  },
+  {
+    "id": "rstudio",
+    "title": "RStudio Blog",
+    "url": "https://posit.co/blog/feed/",
+    "website": "https://posit.co/blog/",
+    "category": "R语言"
+  }
+]
