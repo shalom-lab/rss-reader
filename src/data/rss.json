@@ -50,5 +50,13 @@
     "website": "https://www.cynkra.com/blog/feed.xml",
     "category": "R语言",
     "timestamp": "2025-05-20T03:47:06.988Z"
+  },
+  {
+    "id": "https://blog.djnavarro.net/index.xml",
+    "title": "https://blog.djnavarro.net/index.xml",
+    "url": "https://blog.djnavarro.net/index.xml",
+    "website": "https://blog.djnavarro.net/index.xml",
+    "category": "Danielle Navarro",
+    "timestamp": "2025-06-04T01:29:18.702Z"
   }
 ]
