@@ -93,7 +93,7 @@ async function fetchRSS() {
     }
 
     // 按发布日期排序
-    // allArticles.sort((a, b) => new Date(b.pubDate) - new Date(a.pubDate));
+    allArticles.sort((a, b) => new Date(b.pubDate || new Date().toISOString()) - new Date(a.pubDate || new Date().toISOString()));
 
     // 只保留最新的100篇文章
     //allArticles = allArticles.slice(0, 100);
