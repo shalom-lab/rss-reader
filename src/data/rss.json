@@ -26,5 +26,45 @@
     "url": "https://posit.co/blog/feed/",
     "website": "https://posit.co/blog/",
     "category": "R语言"
+  },
+  {
+    "id": "dataimaginst",
+    "title": "dataimaginst",
+    "url": "https://www.data-imaginist.com/index.xml",
+    "website": "https://www.data-imaginist.com/index.xml",
+    "category": "可视化",
+    "timestamp": "2025-03-25T06:31:11.176Z"
+  },
+  {
+    "id": "Dr Tom Palmer",
+    "title": "Dr Tom Palmer",
+    "url": "https://remlapmot.github.io/index.xml",
+    "website": "https://remlapmot.github.io/index.xml",
+    "category": "R语言",
+    "timestamp": "2025-04-27T02:51:02.098Z"
+  },
+  {
+    "id": "https://www.cynkra.com/blog/feed.xml",
+    "title": "https://www.cynkra.com/blog/feed.xml",
+    "url": "https://www.cynkra.com/blog/feed.xml",
+    "website": "https://www.cynkra.com/blog/feed.xml",
+    "category": "R语言",
+    "timestamp": "2025-05-20T03:47:06.988Z"
+  },
+  {
+    "id": "https://blog.djnavarro.net/index.xml",
+    "title": "https://blog.djnavarro.net/index.xml",
+    "url": "https://blog.djnavarro.net/index.xml",
+    "website": "https://blog.djnavarro.net/index.xml",
+    "category": "Danielle Navarro",
+    "timestamp": "2025-06-04T01:29:18.702Z"
+  },
+  {
+    "id": "Frank Harrell",
+    "title": "Frank Harrell",
+    "url": "https://www.fharrell.com/index.xml",
+    "website": "https://www.fharrell.com/index.xml",
+    "category": "统计",
+    "timestamp": "2025-06-25T07:28:21.204Z"
   }
 ]
